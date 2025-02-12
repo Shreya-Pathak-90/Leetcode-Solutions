@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+bool isMatch(char open, char close) {
+    if (open == '(' && close == ')') return true;
+    if (open == '{' && close == '}') return true;
+    if (open == '[' && close == ']') return true;
+    return false;
+}
+bool isValid(char* s) {
+    char *stack = (char*)malloc(sizeof(char) * (strlen(s) + 1));
+    int top = -1; 
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
+            stack[++top] = s[i];
+        } else {
+            if (top == -1 || !isMatch(stack[top], s[i])) {
+                free(stack);
+                return false;
+            }
+            top--;
+        }
+    }
+    bool result = top == -1;
+    free(stack);
+    return result;
+}
