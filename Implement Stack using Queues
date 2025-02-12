@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct {
+    int *data;     // Array to hold the stack elements
+    int top;       // Index of the top element
+    int capacity;  // Capacity of the stack
+} MyStack;
+
+// Create a new stack
+MyStack* myStackCreate() {
+    MyStack* stack = (MyStack*)malloc(sizeof(MyStack));
+    stack->capacity = 10;  // Initial capacity
+    stack->top = -1;       // Stack is empty initially
+    stack->data = (int*)malloc(stack->capacity * sizeof(int));  // Allocate memory for stack
+    return stack;
+}
+
+// Push an element to the stack
+void myStackPush(MyStack* obj, int x) {
+    // Check if stack is full, and double the capacity if necessary
+    if (obj->top == obj->capacity - 1) {
+        obj->capacity *= 2;
+        obj->data = (int*)realloc(obj->data, obj->capacity * sizeof(int));
+    }
+    obj->data[++obj->top] = x;  // Push the element
+}
+
+// Pop the top element from the stack
+int myStackPop(MyStack* obj) {
+    if (obj->top == -1) {
+        return -1; // Stack is empty
+    }
+    return obj->data[obj->top--];  // Return the top element and decrease the top index
+}
+
+// Return the top element of the stack without removing it
+int myStackTop(MyStack* obj) {
+    if (obj->top == -1) {
+        return -1; // Stack is empty
+    }
+    return obj->data[obj->top];  // Return the top element
+}
+
+// Check if the stack is empty
+bool myStackEmpty(MyStack* obj) {
+    return obj->top == -1;  // Return true if the stack is empty
+}
+
+// Free the memory used by the stack
+void myStackFree(MyStack* obj) {
+    free(obj->data);  // Free the array holding stack elements
+    free(obj);         // Free the stack object itself
+}
+
+/**
+ * Your MyStack struct will be instantiated and called as such:
+ * MyStack* obj = myStackCreate();
+ * myStackPush(obj, x);
+ * int param_2 = myStackPop(obj);
+ * int param_3 = myStackTop(obj);
+ * bool param_4 = myStackEmpty(obj);
+ * myStackFree(obj);
+ */
