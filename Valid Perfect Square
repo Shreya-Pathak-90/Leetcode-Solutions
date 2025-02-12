@@ -1,0 +1,9 @@
+bool isPerfectSquare(int num) {
+   if (num < 0) {
+        return false;
+    }
+    int sqrtNum = (int) sqrt(num); 
+    return sqrtNum * sqrtNum == num; 
+
+    
+}
